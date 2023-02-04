@@ -15,8 +15,14 @@ const SystemDNSPlaceholder = "system"
 var systemResolver *Resolver
 var isolateHandler handler
 
+var _ dnsClient = (*dhcpClient)(nil)
+
 type dhcpClient struct {
 	enable bool
+}
+
+func (d *dhcpClient) Address() string {
+	return SystemDNSPlaceholder
 }
 
 func (d *dhcpClient) Exchange(m *D.Msg) (msg *D.Msg, err error) {
